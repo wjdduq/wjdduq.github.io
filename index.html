@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>김개발 - Java/Spring Backend Developer</title>
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind CSS custom configuration for colors and font
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6B73FF', // Original --primary-color
+                        secondary: '#9B59B6', // Original --secondary-color
+                        darkBg: '#0D1117', // Original --dark-bg
+                        cardBg: '#161B22', // Original --card-bg
+                        textPrimary: '#E6EDF3', // Original --text-primary
+                        textSecondary: '#7D8590', // Original --text-secondary
+                        accentGreen: '#238636', // Original --accent-green
+                        accentOrange: '#F85149', // Original --accent-orange
+                        javaColor: '#ED8B00', // Original --java-color
+                        springColor: '#6DB33F', // Original --spring-color
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], // Apply Inter as default sans-serif font
+                        mono: ['"Courier New"', 'monospace'], // For code snippets
+                    },
+                    animation: {
+                        fadeInUp: 'fadeInUp 0.6s ease-out forwards',
+                        spin: 'spin 1s linear infinite',
+                        ripple: 'ripple-animation 0.3s linear forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            'from': { opacity: '0', transform: 'translateY(30px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        spin: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' },
+                        },
+                        'ripple-animation': {
+                            'to': { transform: 'scale(4)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+</head>
+<body class="font-sans bg-darkBg text-textPrimary leading-relaxed">
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-darkBg bg-opacity-95 backdrop-blur-md z-[1000] py-4 transition-all duration-300 ease-in-out shadow-lg">
+        <div class="container mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="logo text-2xl font-bold text-primary">&lt;Dev/&gt;</div>
+            <ul class="nav-links hidden md:flex space-x-8 lg:space-x-12">
+                <li><a href="#home" class="relative text-textPrimary hover:text-primary transition-colors duration-300">Home</a></li>
+                <li><a href="#about" class="relative text-textPrimary hover:text-primary transition-colors duration-300">About</a></li>
+                <li><a href="#skills" class="relative text-textPrimary hover:text-primary transition-colors duration-300">Skills</a></li>
+                <li><a href="#projects" class="relative text-textPrimary hover:text-primary transition-colors duration-300">Projects</a></li>
+                <li><a href="#contact" class="relative text-textPrimary hover:text-primary transition-colors duration-300">Contact</a></li>
+            </ul>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-textPrimary text-2xl" id="mobile-menu-button" aria-label="Open mobile menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-darkBg bg-opacity-95 z-[999] hidden flex-col items-center justify-center space-y-8 md:hidden">
+            <button class="absolute top-6 right-6 text-textPrimary text-3xl" id="close-mobile-menu" aria-label="Close mobile menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <ul class="flex flex-col items-center space-y-6 text-2xl">
+                <li><a href="#home" class="text-textPrimary hover:text-primary transition-colors duration-300">Home</a></li>
+                <li><a href="#about" class="text-textPrimary hover:text-primary transition-colors duration-300">About</a></li>
+                <li><a href="#skills" class="text-textPrimary hover:text-primary transition-colors duration-300">Skills</a></li>
+                <li><a href="#projects" class="text-textPrimary hover:text-primary transition-colors duration-300">Projects</a></li>
+                <li><a href="#contact" class="text-textPrimary hover:text-primary transition-colors duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-center bg-gradient-to-br from-darkBg to-[#1a1f2e] overflow-hidden">
+        <div class="max-w-4xl z-10 relative animate-fadeInUp">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                김개발
+            </h1>
+            <p class="text-2xl md:text-3xl text-textSecondary mb-4 font-light">
+                Java/Spring Backend Developer
+            </p>
+            <p class="text-textSecondary text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                확장 가능하고 안정적인 백엔드 시스템을 설계하고 구축합니다
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mt-8">
+                <div class="flex items-center gap-2 bg-cardBg px-4 py-2 rounded-full border border-javaColor shadow-lg hover:translate-y-[-3px] hover:shadow-primary/30 transition-all duration-300 ease-in-out">
+                    <i class="fab fa-java text-javaColor text-xl"></i>
+                    <span class="text-lg">Java</span>
+                </div>
+                <div class="flex items-center gap-2 bg-cardBg px-4 py-2 rounded-full border border-springColor shadow-lg hover:translate-y-[-3px] hover:shadow-primary/30 transition-all duration-300 ease-in-out">
+                    <i class="fas fa-leaf text-springColor text-xl"></i>
+                    <span class="text-lg">Spring Boot</span>
+                </div>
+                <div class="flex items-center gap-2 bg-cardBg px-4 py-2 rounded-full border border-primary shadow-lg hover:translate-y-[-3px] hover:shadow-primary/30 transition-all duration-300 ease-in-out">
+                    <i class="fas fa-database text-primary text-xl"></i>
+                    <span class="text-lg">MySQL</span>
+                </div>
+                <div class="flex items-center gap-2 bg-cardBg px-4 py-2 rounded-full border border-primary shadow-lg hover:translate-y-[-3px] hover:shadow-primary/30 transition-all duration-300 ease-in-out">
+                    <i class="fab fa-aws text-primary text-xl"></i>
+                    <span>AWS</span>
+                </div>
+            </div>
+
+            <div class="font-mono bg-cardBg p-6 rounded-lg border-l-4 border-springColor mt-8 text-left text-accentGreen overflow-hidden shadow-xl max-w-xl mx-auto">
+                <span class="typing-text whitespace-pre-wrap"></span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <a href="#projects" class="btn relative overflow-hidden bg-gradient-to-r from-primary to-secondary text-white py-3 px-8 rounded-full font-bold shadow-lg hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center gap-2">
+                    <i class="fas fa-code"></i>
+                    프로젝트 보기
+                </a>
+                <a href="#contact" class="btn relative overflow-hidden bg-transparent text-textPrimary border-2 border-primary py-3 px-8 rounded-full font-bold shadow-lg hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center gap-2">
+                    <i class="fas fa-envelope"></i>
+                    연락하기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section py-20 px-4 md:px-8 max-w-6xl mx-auto opacity-0 translate-y-8 transition-all duration-600 ease-out">
+        <h2 class="section-title text-center text-4xl md:text-5xl font-bold mb-12 relative pb-4">About Me</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="text-lg text-textSecondary space-y-4">
+                <p>안녕하세요! 백엔드 개발에 열정을 가진 개발자입니다.</p>
+                <p>Java와 Spring Framework를 활용하여 확장 가능하고 유지보수가 용이한 시스템을 구축하는 것을 좋아합니다. 
+                클린 코드와 효율적인 아키텍처 설계에 관심이 많으며, 항상 최신 기술 트렌드를 학습하고 적용하려 노력합니다.</p>
+                <p>문제 해결을 통해 성장하는 것을 즐기며, 팀과의 협업을 통해 더 나은 솔루션을 만들어가고 싶습니다.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="stat-card bg-cardBg p-6 rounded-lg text-center border border-primary/20 shadow-md">
+                    <div class="stat-number text-4xl font-bold text-primary" data-target="3">0+</div>
+                    <div class="stat-label text-textSecondary mt-2">Years Experience</div>
+                </div>
+                <div class="stat-card bg-cardBg p-6 rounded-lg text-center border border-primary/20 shadow-md">
+                    <div class="stat-number text-4xl font-bold text-primary" data-target="15">0+</div>
+                    <div class="stat-label text-textSecondary mt-2">Projects Completed</div>
+                </div>
+                <div class="stat-card bg-cardBg p-6 rounded-lg text-center border border-primary/20 shadow-md">
+                    <div class="stat-number text-4xl font-bold text-primary" data-target="500">0+</div>
+                    <div class="stat-label text-textSecondary mt-2">GitHub Commits</div>
+                </div>
+                <div class="stat-card bg-cardBg p-6 rounded-lg text-center border border-primary/20 shadow-md">
+                    <div class="stat-number text-4xl font-bold text-primary" data-target="5">0+</div>
+                    <div class="stat-label text-textSecondary mt-2">Technologies</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section py-20 px-4 md:px-8 max-w-6xl mx-auto opacity-0 translate-y-8 transition-all duration-600 ease-out">
+        <h2 class="section-title text-center text-4xl md:text-5xl font-bold mb-12 relative pb-4">Technical Skills</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div class="skill-category bg-cardBg p-8 rounded-xl border border-primary/20 shadow-lg hover:translate-y-[-5px] transition-transform duration-300 ease-in-out">
+                <h3 class="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+                    <i class="fab fa-java"></i> Backend Development
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Java</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Spring Boot</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Spring Security</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Spring Data JPA</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Hibernate</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Maven</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Gradle</span>
+                </div>
+            </div>
+            <div class="skill-category bg-cardBg p-8 rounded-xl border border-primary/20 shadow-lg hover:translate-y-[-5px] transition-transform duration-300 ease-in-out">
+                <h3 class="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+                    <i class="fas fa-database"></i> Database
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">MySQL</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">PostgreSQL</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Redis</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">MongoDB</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">JPA</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">MyBatis</span>
+                </div>
+            </div>
+            <div class="skill-category bg-cardBg p-8 rounded-xl border border-primary/20 shadow-lg hover:translate-y-[-5px] transition-transform duration-300 ease-in-out">
+                <h3 class="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+                    <i class="fas fa-cloud"></i> DevOps & Infrastructure
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">AWS EC2</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Docker</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Jenkins</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Linux</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Nginx</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">GitHub Actions</span>
+                </div>
+            </div>
+            <div class="skill-category bg-cardBg p-8 rounded-xl border border-primary/20 shadow-lg hover:translate-y-[-5px] transition-transform duration-300 ease-in-out">
+                <h3 class="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+                    <i class="fas fa-tools"></i> Tools & Others
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">IntelliJ IDEA</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Git</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Postman</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Swagger</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">JUnit</span>
+                    <span class="skill-tag bg-primary/10 text-textPrimary px-3 py-1 rounded-full text-sm border border-primary/30 hover:bg-primary/20 hover:translate-y-[-2px] transition-all duration-300 ease-in-out">Mockito</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section py-20 px-4 md:px-8 max-w-6xl mx-auto opacity-0 translate-y-8 transition-all duration-600 ease-out">
+        <h2 class="section-title text-center text-4xl md:text-5xl font-bold mb-12 relative pb-4">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="project-card bg-cardBg rounded-xl overflow-hidden border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-300 ease-in-out hover:translate-y-[-5px]">
+                <div class="p-6 border-b border-primary/10">
+                    <h3 class="project-title text-xl font-semibold text-textPrimary mb-2 flex items-center gap-2">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        E-Commerce API
+                    </h3>
+                    <p class="text-textSecondary text-base leading-relaxed">
+                        대용량 트래픽을 처리할 수 있는 전자상거래 백엔드 API입니다. 
+                        주문, 결제, 재고 관리 시스템을 포함하며 Redis를 활용한 캐싱으로 성능을 최적화했습니다.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-badge bg-javaColor/10 text-javaColor px-3 py-1 rounded-full text-xs border border-javaColor/30">Java</span>
+                        <span class="tech-badge bg-springColor/10 text-springColor px-3 py-1 rounded-full text-xs border border-springColor/30">Spring Boot</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">MySQL</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">Redis</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">AWS</span>
+                    </div>
+                </div>
+                <div class="p-6 flex gap-4">
+                    <a href="#" class="project-link text-primary hover:text-secondary transition-colors duration-300 flex items-center gap-1">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="#" class="project-link text-primary hover:text-secondary transition-colors duration-300 flex items-center gap-1">
+                        <i class="fas fa-external-link-alt"></i>
+                        API 문서
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card bg-cardBg rounded-xl overflow-hidden border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-300 ease-in-out hover:translate-y-[-5px]">
+                <div class="p-6 border-b border-primary/10">
+                    <h3 class="project-title text-xl font-semibold text-textPrimary mb-2 flex items-center gap-2">
+                        <i class="fas fa-users text-primary"></i>
+                        SNS Backend System
+                    </h3>
+                    <p class="text-textSecondary text-base leading-relaxed">
+                        실시간 메시징과 알림 기능을 제공하는 소셜 네트워크 백엔드입니다. 
+                        WebSocket을 통한 실시간 통신과 JWT 기반 인증 시스템을 구현했습니다.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-badge bg-javaColor/10 text-javaColor px-3 py-1 rounded-full text-xs border border-javaColor/30">Java</span>
+                        <span class="tech-badge bg-springColor/10 text-springColor px-3 py-1 rounded-full text-xs border border-springColor/30">Spring Boot</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">WebSocket</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">JWT</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">PostgreSQL</span>
+                    </div>
+                </div>
+                <div class="p-6 flex gap-4">
+                    <a href="#" class="project-link text-primary hover:text-secondary transition-colors duration-300 flex items-center gap-1">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="#" class="project-link text-primary hover:text-secondary transition-colors duration-300 flex items-center gap-1">
+                        <i class="fas fa-chart-line"></i>
+                        성능 분석
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card bg-cardBg rounded-xl overflow-hidden border border-primary/20 shadow-lg hover:shadow-primary/20 transition-all duration-300 ease-in-out hover:translate-y-[-5px]">
+                <div class="p-6 border-b border-primary/10">
+                    <h3 class="project-title text-xl font-semibold text-textPrimary mb-2 flex items-center gap-2">
+                        <i class="fas fa-cog text-primary"></i>
+                        관리자 시스템 API
+                    </h3>
+                    <p class="text-textSecondary text-base leading-relaxed">
+                        역할 기반 접근 제어(RBAC)를 구현한 관리자 시스템입니다. 
+                        복잡한 권한 관리와 데이터 분석 기능을 제공하며, 대시보드용 API를 설계했습니다.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tech-badge bg-javaColor/10 text-javaColor px-3 py-1 rounded-full text-xs border border-javaColor/30">Java</span>
+                        <span class="tech-badge bg-springColor/10 text-springColor px-3 py-1 rounded-full text-xs border border-springColor/30">Spring Security</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">JPA</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">MySQL</span>
+                        <span class="tech-badge bg-primary/10 text-primary px-3 py-1 rounded-full text-xs border border-primary/30">Docker</span>
+                    </div>
+                </div>
+                <div class="p-6 flex gap-4">
+                    <a href="#" class="project-link text-primary hover:text-secondary transition-colors duration-300 flex items-center gap-1">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="#" class="project-link text-primary hover:text-secondary transition-colors duration-300 flex items-center gap-1">
+                        <i class="fas fa-file-alt"></i>
+                        Architecture
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section py-20 px-4 md:px-8 max-w-6xl mx-auto opacity-0 translate-y-8 transition-all duration-600 ease-out">
+        <h2 class="section-title text-center text-4xl md:text-5xl font-bold mb-12 relative pb-4">Get In Touch</h2>
+        <div class="max-w-xl mx-auto text-center">
+            <p class="text-textSecondary text-lg md:text-xl mb-8">
+                새로운 기회에 대해 이야기하고 싶습니다. 언제든 연락해주세요!
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6 mb-8">
+                <div class="contact-item flex items-center gap-2 text-textSecondary text-lg">
+                    <i class="fas fa-envelope text-primary"></i>
+                    <span>developer@email.com</span>
+                </div>
+                <div class="contact-item flex items-center gap-2 text-textSecondary text-lg">
+                    <i class="fas fa-phone text-primary"></i>
+                    <span>010-1234-5678</span>
+                </div>
+                <div class="contact-item flex items-center gap-2 text-textSecondary text-lg">
+                    <i class="fas fa-map-marker-alt text-primary"></i>
+                    <span>서울, 대한민국</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 mb-8">
+                <a href="#" class="social-link w-12 h-12 bg-cardBg rounded-full flex items-center justify-center text-textPrimary text-2xl border border-primary/20 hover:bg-primary hover:text-white hover:translate-y-[-3px] transition-all duration-300 ease-in-out" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="social-link w-12 h-12 bg-cardBg rounded-full flex items-center justify-center text-textPrimary text-2xl border border-primary/20 hover:bg-primary hover:text-white hover:translate-y-[-3px] transition-all duration-300 ease-in-out" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="social-link w-12 h-12 bg-cardBg rounded-full flex items-center justify-center text-textPrimary text-2xl border border-primary/20 hover:bg-primary hover:text-white hover:translate-y-[-3px] transition-all duration-300 ease-in-out" aria-label="Blog">
+                    <i class="fas fa-blog"></i>
+                </a>
+                <a href="#" class="social-link w-12 h-12 bg-cardBg rounded-full flex items-center justify-center text-textPrimary text-2xl border border-primary/20 hover:bg-primary hover:text-white hover:translate-y-[-3px] transition-all duration-300 ease-in-out" aria-label="Resume (PDF)">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+            </div>
+
+            <div>
+                <a href="#" class="btn relative overflow-hidden bg-gradient-to-r from-primary to-secondary text-white py-3 px-8 rounded-full font-bold shadow-lg hover:scale-105 transition-all duration-300 ease-in-out inline-flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i>
+                    이력서 다운로드
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 border-t border-primary/20 text-textSecondary text-sm">
+        <p>&copy; 2025 김개발. Built with ❤️ and lots of ☕</p>
+    </footer>
+
+    <script>
+        // DOMContentLoaded to ensure elements are available
+        document.addEventListener('DOMContentLoaded', () => {
+            // Page loader hides after content loads
+            const pageLoader = document.querySelector('.page-loader');
+            if (pageLoader) {
+                pageLoader.classList.add('hidden');
+            }
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Navigation background and shadow on scroll
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { // Changed threshold to 50 for quicker response
+                    nav.classList.add('shadow-xl', 'bg-opacity-100'); // Add more shadow and full opacity
+                } else {
+                    nav.classList.remove('shadow-xl', 'bg-opacity-100');
+                }
+            });
+
+            // Intersection Observer for section animations (fade-in-up)
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px' // Slightly reduce bottom margin
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('opacity-0', 'translate-y-8');
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections for animation
+            document.querySelectorAll('.section').forEach(section => {
+                // Initial state set by Tailwind classes in HTML, observer adds final state
+                observer.observe(section);
+            });
+
+            // Typing animation for code block
+            const typingTextElement = document.querySelector('.typing-text');
+            const codeText = `@RestController
+public class DeveloperController {
+    @GetMapping("/hire-me")
+    public ResponseEntity<String> hireMe() {
+        return ResponseEntity.ok("Let's build something amazing!");
+    }
+}`;
+            let i = 0;
+            function typeWriter() {
+                if (!typingTextElement) return; // Guard clause
+                if (i < codeText.length) {
+                    if (codeText.charAt(i) === '\n') {
+                        typingTextElement.innerHTML += '<br>';
+                    } else if (codeText.charAt(i) === ' ' && (i === 0 || codeText.charAt(i-1) === ' ' || codeText.charAt(i-1) === '\n')) {
+                        // Handle multiple spaces or spaces after newline as &nbsp;
+                        typingTextElement.innerHTML += '&nbsp;';
+                    } else {
+                        typingTextElement.innerHTML += codeText.charAt(i);
+                    }
+                    i++;
+                    setTimeout(typeWriter, 50); // Typing speed
+                }
+            }
+
+            // Start typing animation after a short delay
+            setTimeout(() => {
+                typingTextElement.innerHTML = ''; // Clear content before typing
+                typeWriter();
+            }, 1000);
+
+            // Add click animations (ripple effect) to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    let ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+
+                    let rect = this.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
+
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 300); // Match animation duration
+                });
+            });
+
+            // Parallax effect for hero section (optional, can be subtle)
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    // Apply subtle parallax to the hero content, not the whole section
+                    const heroContent = heroSection.querySelector('.animate-fadeInUp');
+                    if (heroContent) {
+                        heroContent.style.transform = `translateY(${scrolled * 0.15}px)`; // Slower parallax
+                    }
+                });
+            }
+
+            // Active navigation highlighting
+            window.addEventListener('scroll', () => {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-links a');
+                
+                let current = '';
+                const scrollYOffset = window.scrollY;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - nav.clientHeight - 20; // Adjust for nav height
+                    const sectionHeight = section.clientHeight;
+                    if (scrollYOffset >= sectionTop && scrollYOffset < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    link.classList.remove('text-primary'); // Remove Tailwind active class
+                    link.classList.add('text-textPrimary'); // Add Tailwind inactive class
+
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                        link.classList.add('text-primary'); // Add Tailwind active class
+                        link.classList.remove('text-textPrimary'); // Remove Tailwind inactive class
+                    }
+                });
+            }, { passive: true }); // Use passive listener for performance
+
+            // Counter animation for stats
+            function animateCounters() {
+                const counters = document.querySelectorAll('.stat-number');
+                const speed = 200; // Increase for slower animation, decrease for faster
+
+                counters.forEach(counter => {
+                    // Store original target in data-target for re-animation if needed
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    let currentCount = 0;
+                    const increment = target / speed;
+
+                    const updateCount = () => {
+                        if (currentCount < target) {
+                            currentCount += increment;
+                            counter.innerText = `${Math.ceil(currentCount)}+`;
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            counter.innerText = `${target}+`;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            // Trigger counter animation when stats section is visible
+            const statsSection = document.querySelector('.about-stats');
+            if (statsSection) {
+                const statsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animateCounters();
+                            statsObserver.unobserve(entry.target); // Stop observing after animation
+                        }
+                    });
+                }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+
+                statsObserver.observe(statsSection);
+            }
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && closeMobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling on body
+                });
+
+                closeMobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = ''; // Restore scrolling
+                });
+
+                // Close mobile menu when a link is clicked
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
